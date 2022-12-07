@@ -9,20 +9,34 @@ using System.Threading.Tasks;
 namespace Program
 {
 
-    public class Program
+    class Program
     {
-
-        static void MainStart(string[] args)
+        public static void Main()
         {
-            Console.Write("input: ");
-            string test = Kondital("Hejsa med dig");
-            Console.WriteLine(test);
+            Console.Write("Indtast din max puls i heltal slag i minuttet: ");
+            Int16 maxpulse = Int16.Parse(Console.ReadLine());
+            Console.Write("Indtast din hvilepuls i heltal slag i minuttet: ");
+            Int16 restPulse = Int16.Parse(Console.ReadLine());
+            Console.Write("Indtast din vægt (kg): ");
+            double weight = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Dit kondital er: {0}", Condylarcount.CalculateCondital(maxpulse, restPulse));
+            Console.WriteLine("Din maksimale iltindtagelse er: {0}", Condylarcount.CalculateOxygenIntake(maxpulse, restPulse, weight));
         }
 
-        static string Kondital(string est)
+    }
+
+    class Condylarcount
+    {
+        public static double CalculateCondital(Int16 maxPulse, Int16 restPulse)
         {
-            Console.WriteLine(est);
-            return "Hejsa";
+            double intCondi = Math.Round((double)maxPulse / restPulse * 15.3);
+            return intCondi;
+        }
+
+        public static double CalculateOxygenIntake(Int16 maxPulse, Int16 restPulse, double weight)
+        {
+            double intOxygenIntake = Math.Round((double)Condylarcount.CalculateCondital(maxPulse, restPulse) / weight * 1000);
+            return intOxygenIntake;
         }
 
     }
